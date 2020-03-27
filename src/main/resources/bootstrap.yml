@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: mafch-d-sucursales
+  config:
+    name: ${spring.application.name}
+  cloud:
+    config:
+      uri: http://localhost:8888
+
+eureka:
+  client:
+    service-url:
+      default-zone: http://localhost:8761
+server:
+  port: 8191
