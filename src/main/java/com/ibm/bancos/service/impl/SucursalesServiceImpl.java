@@ -37,9 +37,11 @@ public class SucursalesServiceImpl implements SucursalesService{
 	}
 
 	@Override
-	public RetrieveSucursalesResponse retrieveBancosCoordenadas(Double xCoor, Double yCoord) {
-		RetrieveSucursalesResponse response = bancosCoordenadasClient.getBancos(xCoor, yCoord).getBody();
-		log.info("retieve?:{}",response.getSucursales().size());
+	public RetrieveSucursalesResponse retrieveBancosCoordenadas(Double gpsCoordX, Double gpsCoordY) {
+		RetrieveSucursalesResponse response = new RetrieveSucursalesResponse();
+		response.setSucursales(null);	
+		response.setSucursales( bancosCoordenadasClient.getBancos(gpsCoordX, gpsCoordY).getBody() );
+		log.info("retrieve sucursales response?: {}",response.getSucursales().size());
 		return response;
 	}
 	

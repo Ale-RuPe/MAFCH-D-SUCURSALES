@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ibm.bancos.model.RetrieveSucursalesRequest;
 import com.ibm.bancos.model.RetrieveSucursalesResponse;
 import com.ibm.bancos.service.ChooserService;
-import com.ibm.bancos.service.SucursalesService;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 public class SucursalesController {
 	@Autowired
@@ -20,8 +22,9 @@ public class SucursalesController {
 	@PostMapping("/api/v1/sucursales/retrieve")
 	public ResponseEntity<RetrieveSucursalesResponse> retrieveSucursales(
 			@RequestBody RetrieveSucursalesRequest request){
-		
-		return service.getRetrieve(request);
+		RetrieveSucursalesResponse response = service.getRetrieve(request);
+		log.info("Retrieving response: {}", response.getSucursales().size());
+		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 	
 }
