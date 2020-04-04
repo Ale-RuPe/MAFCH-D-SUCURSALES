@@ -8,12 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ibm.bancos.model.BancoModel;
-
-@FeignClient(name = "${client.coordenadas.name}", fallback =BancosCoordenadasClientFallback.class)
-public interface BancosCoordenadasClient {
+ 
+@FeignClient(name = "${client.zipcode.name}", fallback = BancosZipCodeFallback.class)
+public interface BancosZipCodeClient {
 	
-	@GetMapping("${client.coordenadas.uri}")
+	@GetMapping("${client.zipcode.uri}")
 	public ResponseEntity<List<BancoModel>> getBancos(
-			@RequestParam Double gpsCoordX,
-			@RequestParam Double gpsCoordY);
+			@RequestParam String postalcode);
 }

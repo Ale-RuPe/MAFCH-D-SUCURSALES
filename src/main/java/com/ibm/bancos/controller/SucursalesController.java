@@ -19,11 +19,18 @@ public class SucursalesController {
 	@Autowired
 	ChooserService service;
 	
-	@PostMapping("/api/v1/sucursales/retrieve")
+	@PostMapping("${controller.uri}")
 	public ResponseEntity<RetrieveSucursalesResponse> retrieveSucursales(
 			@RequestBody RetrieveSucursalesRequest request){
+		
+		log.info("Controller receiving data {}",request);
+		if(	request.getEstado()==null && request.getZipcode()==null 
+			&& request.getGpsCoordX()==null && request.getGpsCoordY()==null) {
+			return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+		}
 		RetrieveSucursalesResponse response = service.getRetrieve(request);
 		log.info("Retrieving response: {}", response.getSucursales().size());
+
 		return new ResponseEntity<>(response,HttpStatus.OK);
 	}
 	

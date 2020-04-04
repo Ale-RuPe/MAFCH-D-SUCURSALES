@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.ibm.bancos.client.BancosCoordenadasClient;
 import com.ibm.bancos.client.BancosEstadoClient;
+import com.ibm.bancos.client.BancosZipCodeClient;
 import com.ibm.bancos.model.RetrieveSucursalesResponse;
 import com.ibm.bancos.service.SucursalesService;
 
@@ -19,6 +20,8 @@ public class SucursalesServiceImpl implements SucursalesService{
 	@Autowired
 	BancosCoordenadasClient bancosCoordenadasClient;
 	
+	@Autowired
+	BancosZipCodeClient bancosZipCodeClient;
 	
 	@Override
 	public RetrieveSucursalesResponse retrieveBancosEstados(String estado) {
@@ -32,14 +35,17 @@ public class SucursalesServiceImpl implements SucursalesService{
 
 	@Override
 	public RetrieveSucursalesResponse retrieveBancosZipCode(String zipcode) {
+		log.info("Calling external service");
+		RetrieveSucursalesResponse response = new RetrieveSucursalesResponse();
+		response.setSucursales( bancosZipCodeClient.getBancos(zipcode).getBody() );
+		log.info("External service returned 200 OK");
 		
-		return null;
+		return response;
 	}
 
 	@Override
 	public RetrieveSucursalesResponse retrieveBancosCoordenadas(Double gpsCoordX, Double gpsCoordY) {
-		RetrieveSucursalesResponse response = new RetrieveSucursalesResponse();
-		response.setSucursales(null);	
+		RetrieveSucursalesResponse response = new RetrieveSucursalesResponse();	
 		response.setSucursales( bancosCoordenadasClient.getBancos(gpsCoordX, gpsCoordY).getBody() );
 		log.info("retrieve sucursales response?: {}",response.getSucursales().size());
 		return response;

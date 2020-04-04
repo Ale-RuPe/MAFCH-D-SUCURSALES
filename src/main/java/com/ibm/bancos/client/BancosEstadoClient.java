@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.ibm.bancos.model.BancoModel;
 
-@FeignClient(name = "MAFCS-D-BANCOS-ESTADO")
+@FeignClient(name = "${client.estado.name}", fallback = BancosEstadoClientFallback.class)
 public interface BancosEstadoClient {
 	
-	@GetMapping("/api/v1/bancos/estado/{state}")
+	@GetMapping("${client.estado.uri}")
 	public ResponseEntity<List<BancoModel>> getBancos(@PathVariable String state);
 }
