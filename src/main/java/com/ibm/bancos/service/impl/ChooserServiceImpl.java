@@ -16,11 +16,11 @@ public class ChooserServiceImpl implements ChooserService{
 	@Override
 	public RetrieveSucursalesResponse getRetrieve(RetrieveSucursalesRequest request) {
 		RetrieveSucursalesResponse response = new RetrieveSucursalesResponse();  
-				if(request.getEstado()!=null) 
+				if(request.getEstado() != null) 
 					response = service.retrieveBancosEstados(request.getEstado());
-				else if(request.getZipcode()!=null)
+				else if(request.getZipcode() != null)
 					response = service.retrieveBancosZipCode(request.getZipcode());
-				else if(request.getGpsCoordX()!=null && request.getGpsCoordY()!=null)
+				else if(request.getGpsCoordX() != null && request.getGpsCoordY() != null)
 					response = service.retrieveBancosCoordenadas( request.getGpsCoordX(), request.getGpsCoordY() ); 
 		return response;
 	}
